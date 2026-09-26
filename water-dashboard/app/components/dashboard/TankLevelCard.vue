@@ -9,10 +9,10 @@
         :series="[porcentaje]" 
       />
       <template #fallback>
-        <div class="h-[250px] flex items-center justify-center animate-pulse bg-gray-50 w-full rounded-full"></div>
+        <div class="h-62.5 flex items-center justify-center animate-pulse bg-gray-50 w-full rounded-full"></div>
       </template>
     </ClientOnly>
-    <p class="text-2xl font-bold text-gray-800 mt-[-20px]">{{ volumen }} L</p>
+    <p class="text-2xl font-bold text-gray-800 -mt-5">{{ volumen }} L</p>
     <p class="text-sm text-gray-400">Volumen estimado</p>
   </div>
 </template>

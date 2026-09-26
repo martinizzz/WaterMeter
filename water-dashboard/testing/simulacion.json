@@ -1,0 +1,29 @@
+{
+    "tiempo_real": {
+        "nivel_tinaco": {
+            "porcentaje": 85,
+            "volumen_litros": 950
+        },
+        "consumo_hoy": 210,
+        "flujo_actual": {
+            "caudal": 14.2,
+            "estado": true
+        }
+    },
+    "historico": {
+        "ultimos_7_dias": [
+            350,
+            420,
+            200,
+            380,
+            410,
+            500,
+            390
+        ],
+        "mes_actual": 8.5
+    },
+    "estadisticas": {
+        "promedio_diario": 395,
+        "hora_pico": "07:30 AM"
+    }
+}
