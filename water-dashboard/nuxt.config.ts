@@ -1,18 +1,16 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 // nuxt.config.ts
-import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
 
-
   // 1. Registramos el módulo PWA
   modules: [
-    '@vite-pwa/nuxt',
     '@nuxtjs/tailwindcss',
+    '@vite-pwa/nuxt'
   ],
 
   // 2. Configuramos la PWA
