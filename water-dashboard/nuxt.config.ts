@@ -1,3 +1,5 @@
+import { defineNuxtConfig } from "nuxt/config";
+
 // nuxt.config.ts
 import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
@@ -6,15 +8,11 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  vite: {
-    plugins: [
-      tailwindcss(),
-    ],
-  },
 
   // 1. Registramos el módulo PWA
   modules: [
-    '@vite-pwa/nuxt'
+    '@vite-pwa/nuxt',
+    '@nuxtjs/tailwindcss',
   ],
 
   // 2. Configuramos la PWA
