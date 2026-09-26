@@ -1,3 +1,22 @@
+
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import { useWaterData } from '~/composables/useWaterData';
+
+// Aquí extraemos TODAS las variables que el template necesita
+const { 
+  realTimeData, 
+  historicalData, 
+  statsData, 
+  isLoading, 
+  isLoadingHistory, 
+  listenToRealTimeData 
+} = useWaterData();
+
+onMounted(() => {
+  listenToRealTimeData();
+});
+</script>
 <template>
   <div>
     <header class="mb-8">
@@ -25,27 +44,32 @@
       </template>
     </div>
 
-    <!-- El resto de la vista de analíticas se queda en esqueletos para la Fase 3 -->
+  <!-- Grid Secundario para Analítica e Histórico -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="col-span-1 lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center">
-        <p class="text-gray-400 font-medium">Gráficas Históricas (Próxima Fase)</p>
+      <div class="col-span-1 lg:col-span-2">
+        <template v-if="isLoadingHistory">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-300px animate-pulse"></div>
+        </template>
+        <template v-else>
+          <DashboardHistoryChartCard :datosSemana="historicalData?.ultimos_7_dias || [0,0,0,0,0,0,0]" />
+        </template>
       </div>
-      <div class="col-span-1 flex flex-col gap-6">
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 min-h-[140px] flex items-center justify-center">
-          <p class="text-gray-400 font-medium">KPIs (Próxima Fase)</p>
-        </div>
+      
+      <div class="col-span-1">
+        <template v-if="isLoadingHistory">
+          <div class="flex flex-col gap-6 h-full">
+            <div v-for="i in 3" :key="i" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-32 animate-pulse"></div>
+          </div>
+        </template>
+        <template v-else>
+          <DashboardKpiBoard 
+            :acumuladoMensual="historicalData?.mes_actual || 0"
+            :promedioDiario="statsData?.promedio_diario || 0"
+            :horaPico="statsData?.hora_pico || '00:00 AM'"
+          />
+        </template>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { onMounted } from 'vue';
-import { useWaterData } from '~/composables/useWaterData';
-
-const { realTimeData, isLoading, listenToRealTimeData } = useWaterData();
-
-onMounted(() => {
-  listenToRealTimeData();
-});
-</script>
