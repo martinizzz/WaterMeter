@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useWaterData } from '~/composables/useWaterData';
+import { useWaterAlerts } from '~/composables/useWaterAlerts';
 
 // Aquí extraemos TODAS las variables que el template necesita
 const { 
@@ -13,9 +14,17 @@ const {
   listenToRealTimeData 
 } = useWaterData();
 
+const { alertaNivel, alertaFuga, monitorearDatos } = useWaterAlerts();
+
+// Vigilar los datos en tiempo real y pasárselos al motor de alertas
+watch(realTimeData, (nuevosDatos) => {
+  monitorearDatos(nuevosDatos);
+}, { deep: true });
+
 onMounted(() => {
   listenToRealTimeData();
 });
+
 </script>
 <template>
   <div>
@@ -23,6 +32,22 @@ onMounted(() => {
       <h2 class="text-2xl font-bold text-gray-800">Dashboard en Tiempo Real</h2>
       <p class="text-gray-500">Monitoreo de consumo y nivel de tinaco</p>
     </header>
+
+    <!-- Sistema de Alertas -->
+    <div class="mb-6">
+      <UiAlertBanner 
+        v-if="alertaNivel" 
+        tipo="danger" 
+        :mensaje="alertaNivel" 
+        @dismiss="alertaNivel = null"
+      />
+      <UiAlertBanner 
+        v-if="alertaFuga" 
+        tipo="warning" 
+        :mensaje="alertaFuga" 
+        @dismiss="alertaFuga = null"
+      />
+    </div>
 
     <!-- Grid Principal en Tiempo Real -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
