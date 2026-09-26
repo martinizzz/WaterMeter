@@ -1,15 +1,15 @@
 // nuxt.config.ts
+import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
 
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-      autoprefixer: {},
-    },
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
   },
 
   // 1. Registramos el módulo PWA
